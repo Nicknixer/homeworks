@@ -1,0 +1,19 @@
+{
+	"title": "My cats",
+	"description": "About my cats.",
+	"cats": [{
+		"name": "Tom",
+		"color": "#123123",
+		"old":"4"
+	},
+	{
+		"name": "Murzik",
+		"color": "#FF00FF",
+		"old":"2"
+	},
+	{
+		"name": "Shaurma",
+		"color": "#FF0000",
+		"old":"1"
+	}]
+}
