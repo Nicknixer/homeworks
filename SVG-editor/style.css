@@ -1,0 +1,37 @@
+.editor {
+  display: -webkit-inline-flex;
+  display: -ms-inline-flex;
+  display: inline-flex;
+
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+
+  background-color: #1976D2;
+  border-radius: 6px;
+}
+.editor p {
+  margin: 0.5rem 0;
+  padding: 0 1rem;
+  color: #fff;
+  font-weight: bold;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: move;
+}
+
+textarea {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  outline: none;
+
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+
+  height: 160px;
+  width: 480px;
+}
