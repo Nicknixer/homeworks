@@ -16,21 +16,21 @@
 			<CONTENT>
 			<NAME>Мурзик</NAME>
 			<INFO>МАленький и пушистый</INFO>
-			<COLOR>#FF00FF</COLOR>
+			<COLOR>#22F0FF</COLOR>
 			</CONTENT>
 		</CAT>
 		<CAT ID="2">
 			<CONTENT>
 			<NAME>Тимоша</NAME>
 			<INFO>Быстрая и ласковая</INFO>
-			<COLOR>#FFFFFF</COLOR>
+			<COLOR>#FF2121</COLOR>
 			</CONTENT>
 		</CAT>
 		<CAT ID="3">
 			<CONTENT>
 			<NAME>Вася</NAME>
 			<INFO>Дикий и сильный</INFO>
-			<COLOR>#000000</COLOR>
+			<COLOR>#0045FF</COLOR>
 			</CONTENT>
 		</CAT>
 </CATOPEDIA>
