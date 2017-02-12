@@ -1,0 +1,16 @@
+var test = require('tape'),
+	fib = require('./app.js');
+
+let args = [0, '0', 1, '1', 2, 5, 10, -10, -1, -5, '5', NaN, 'NAN', 'text', false];
+let exp_ans = [0, 0, 1, 1, 1, 5, 55, -55, 1, 5, 5, 0, 0, 0, 0];
+
+args.forEach( (el, index, array) => {
+
+	test(`Fiboachi function ${index}`, assert => {
+		const actual = fib(el),
+			expected = exp_ans[index];
+
+		assert.equal(actual, expected, `Input: ${el}, expected: ${expected}, received: ${actual}`);
+		assert.end();
+	});
+});

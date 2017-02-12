@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE CATOPEDIA [
+<!ENTITY AUTOR "Nickolay Sergeychuk" >
+<!ELEMENT NAME (#PCDATA) >
+<!ELEMENT INFO (#PCDATA) >
+<!ELEMENT COLOR (#PCDATA) >
+<!ELEMENT CONTENT (NAME,INFO?,COLOR?) >
+<!ELEMENT CAT (CONTENT) >
+<!ATTLIST CAT 
+   ID	CDATA	#REQUIRED >
+<!ELEMENT CATOPEDIA (CAT+) >
+]>
+<?xml-stylesheet type="text/xsl" href="lang.xsl" ?>
+<CATOPEDIA>
+		<CAT ID="1">
+			<CONTENT>
+			<NAME>Мурзик</NAME>
+			<INFO>МАленький и пушистый</INFO>
+			<COLOR>#22F0FF</COLOR>
+			</CONTENT>
+		</CAT>
+		<CAT ID="2">
+			<CONTENT>
+			<NAME>Тимоша</NAME>
+			<INFO>Быстрая и ласковая</INFO>
+			<COLOR>#FF2121</COLOR>
+			</CONTENT>
+		</CAT>
+		<CAT ID="3">
+			<CONTENT>
+			<NAME>Вася</NAME>
+			<INFO>Дикий и сильный</INFO>
+			<COLOR>#0045FF</COLOR>
+			</CONTENT>
+		</CAT>
+</CATOPEDIA>
