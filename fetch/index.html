@@ -1,0 +1,44 @@
+<!DOCTYPE ht id="tab"ml>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<table id="tab"></table>
+		<script>
+       fetch('http://kodaktor.ru/j/users', {method: 'GET'}) 
+         .then ( x=> x.json() )
+       .then ( x=> {
+
+
+		let tab = document.createDocumentFragment();
+		let json = x.users;
+		json.forEach(function(a,b) {
+
+		let el = document.createElement('tr');
+		let text = document.createElement('td');
+		text.innerHTML = a.login;
+
+		el.appendChild(text);
+		text = document.createElement('td');
+		text.innerHTML = a.password;
+
+		el.appendChild(text);
+
+		tab.appendChild(el);
+		});
+		let table = document.querySelector('#tab').appendChild(tab);
+         
+       })
+         .catch (e=>alert(e));
+
+
+
+
+
+//		alert(json.users[0].login);
+	</script>
+</body>
+</html>
