@@ -3,74 +3,58 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<script src='https://kodaktor.ru/j/out'></script>
 </head>
 <body>
 	<input type="text" id="amount" value="3">
-	<button id="ok" onclick="add()">Ok</button>
-	<button id="fib" onclick="fib()">Fib</button>
+	<button id="ok">Ok</button>
 
-	<button id="arif" onclick="arif()">Arif</button>
-	<button id="sum" onclick="sum()">Sum</button>
-	<div id="list">
-		
-	</div>
+	<div id="list"></div>
+	<div id="functionsPlace"></div>
 
 	<script>
-
-/*	let func = 0;
-
-	fetch('http://kodaktor.ru/j/funcs', {method: 'GET'}) 
-         .then ( x=> x.json() )
-       .then ( x=> {
-       		func = x.funcs[1].body;
-       		console.log(func);
-       		fib = function(x) {
-  	     			let arguments = [x];
-       			eval('' + func +';');
-       		};
-       		console.log(fib(2));
-       })*/
-
-	function fib() {
-		let inputs = document.querySelectorAll('.vals');
-		inputs.forEach(function(el){
-			console.log(el.value + '=' + (f=>x=>(x<=1)?1:x*f(f)(--x))(f=>x=>(x<=1)?1:x*f(f)(--x))(el.value));
-
-
-		});
-	}
-
-	function sum() {
-		let inputs = document.querySelectorAll('.vals');
-		let vals = [];
-		inputs.forEach(function(e){
-			vals.push(parseInt(e.value));
-		});
-		console.log(vals.reduce((x,y)=>x+y));
-	}
-
-	function arif() {
-		let inputs = document.querySelectorAll('.vals');
-		let vals = [];
-		inputs.forEach(function(e){
-			vals.push(parseInt(e.value));
-		});
-		console.log(vals.reduce((x,y)=>(0+x+y)/2));
-	}
-
+		let library = {};
+		const functionsPlace = document.querySelector('#functionsPlace');	
+		const buttonOk = document.querySelector('#ok');	
+		buttonOk.setAttribute('disabled', true);
 		
-			function add(e) {
+		fetch('https://kodaktor.ru/j/funcs', {method: 'GET'}) 
+		.then ( x=> x.json() )
+		.then ( x=> {
+			library[x.funcs[0].name] = new Function(x.funcs[0].body);
+			library[x.funcs[1].name] = new Function(x.funcs[1].body);
+			library['Arif'] = new Function( 'return (Array.from(arguments)).reduce((x,y)=>(x+y)/2);' );
+			library['SQRT of proiz'] = new Function('return Math.sqrt(Array.from(arguments).reduce((x,y)=>x*y))');
+			Out.log("Объект с функциями загружен.");
+			buttonOk.removeAttribute('disabled');
+		})
+		.catch(e => {
+			Out.log("Объект с функциями не загружен.");
+		});
 
-				let tab = document.createDocumentFragment();
-				for (let i=0;i<document.querySelector('#amount').value;i++){
-					let el = document.createElement('input');
-					el.className="vals";
-					tab.appendChild(el);
-				}
-				let div = document.querySelector('#list').appendChild(tab);
-				
+		buttonOk.addEventListener('click', e => {
+			buttonOk.setAttribute('disabled', true);
+			let tab = document.createDocumentFragment();
+			for (let i=0;i<document.querySelector('#amount').value;i++){
+				let el = document.createElement('input');
+				el.className="vals";
+				tab.appendChild(el);
 			}
-		
+			let div = document.querySelector('#list').appendChild(tab);
+
+			for (let [funcName, funcBody] of Object.entries(library)) {
+				let button = document.createElement('button');
+				button.appendChild(document.createTextNode(funcName));
+				functionsPlace.appendChild(button);
+
+				button.addEventListener('click', e => {
+					let inputs = document.querySelectorAll('.vals');
+					let arr = Array.from(inputs).map(x => Number(x.value));
+					Out.log(Reflect.apply(funcBody, null, arr));
+				});
+			} 
+
+		});
 	</script>
 </body>
 </html>
