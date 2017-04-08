@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" id="amount" value="3">
+	<button id="ok" onclick="add()">Ok</button>
+	<button id="fib" onclick="fib()">Fib</button>
+
+	<button id="arif" onclick="arif()">Arif</button>
+	<button id="sum" onclick="sum()">Sum</button>
+	<div id="list">
+		
+	</div>
+
+	<script>
+
+/*	let func = 0;
+
+	fetch('http://kodaktor.ru/j/funcs', {method: 'GET'}) 
+         .then ( x=> x.json() )
+       .then ( x=> {
+       		func = x.funcs[1].body;
+       		console.log(func);
+       		fib = function(x) {
+  	     			let arguments = [x];
+       			eval('' + func +';');
+       		};
+       		console.log(fib(2));
+       })*/
+
+	function fib() {
+		let inputs = document.querySelectorAll('.vals');
+		inputs.forEach(function(el){
+			console.log(el.value + '=' + (f=>x=>(x<=1)?1:x*f(f)(--x))(f=>x=>(x<=1)?1:x*f(f)(--x))(el.value));
+
+
+		});
+	}
+
+	function sum() {
+		let inputs = document.querySelectorAll('.vals');
+		let vals = [];
+		inputs.forEach(function(e){
+			vals.push(parseInt(e.value));
+		});
+		console.log(vals.reduce((x,y)=>x+y));
+	}
+
+	function arif() {
+		let inputs = document.querySelectorAll('.vals');
+		let vals = [];
+		inputs.forEach(function(e){
+			vals.push(parseInt(e.value));
+		});
+		console.log(vals.reduce((x,y)=>(0+x+y)/2));
+	}
+
+		
+			function add(e) {
+
+				let tab = document.createDocumentFragment();
+				for (let i=0;i<document.querySelector('#amount').value;i++){
+					let el = document.createElement('input');
+					el.className="vals";
+					tab.appendChild(el);
+				}
+				let div = document.querySelector('#list').appendChild(tab);
+				
+			}
+		
+	</script>
+</body>
+</html>
