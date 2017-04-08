@@ -8,7 +8,7 @@
 
 	<table id="tab"></table>
 		<script>
-       fetch('http://kodaktor.ru/j/users', {method: 'GET'}) 
+       fetch('https://kodaktor.ru/j/users', {method: 'GET'}) 
          .then ( x=> x.json() )
        .then ( x=> {
 
@@ -33,12 +33,6 @@
          
        })
          .catch (e=>alert(e));
-
-
-
-
-
-//		alert(json.users[0].login);
 	</script>
 </body>
 </html>
