@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+<div class="cont">
+  <div class="col">
+    <div id="adder">
+      <!-- «компонент-клиент» -->
+      <div id="goodsList">
+        </div>
+      <br>
+    </div>
+  </div>
+  <div class="col" id="basket">
+    <p>Total price: <span id="totalPrice">0</span>$</p>
+    <ul id="items"></ul>
+    <!-- «компонент-сервер» -->
+  </div>
+</div>
+
+
+    <script>
+        const localEvents = {
+            query: "addItem",
+            response: "result"
+        };
+        const statuses = ["red", "lime"];
+        const CLIENT = document.querySelector(`#adder`);
+        const SERVER = document.querySelector(`#items`);
+        const itemList = {
+            hdd: 95,
+            ssd: 150,
+            usbdrive: 8,
+            microsd: 120,
+            hybrid: 240,
+            smthEpic: 500
+        };
+
+        const cartLimit = 230;
+        const goodsList = CLIENT.querySelector('#goodsList');
+        let money = cartLimit;
+
+        for (let [k, v] of Object.entries(itemList)) {
+            let div = document.createElement('div');
+            let text = document.createElement('span');
+            text.innerHTML = `${k} (${v} руб.) `;
+
+            div.appendChild(text);
+            let buyButton = document.createElement('button');
+            buyButton.innerHTML = "+";
+
+            div.appendChild(buyButton);
+            goodsList.appendChild(div);
+
+            buyButton.addEventListener('click', e => {
+                let inputValue = k;
+                let currItemPrice = itemList[inputValue] || false;
+                console.log(k);
+
+                sendMessage({
+                    where: SERVER,
+                    title: localEvents.query,
+                    content: `${inputValue}: ${currItemPrice}$`,
+                    type: inputValue,
+                    price: currItemPrice,
+                    sender: e.target.parentElement
+                });
+            });
+
+        }
+
+        let totalPrice = 0;
+        const totalPriceSpan = document.querySelector('#totalPrice');
+
+
+        function createMessage(
+        eventTitle = 'testEvent',
+        content = 'test',
+        sender = null,
+        price = 0,
+        type = null
+        ) {
+        return new CustomEvent(eventTitle, {
+            detail: {
+            content,
+            sender,
+            price,
+            type
+            },
+            bubbles: false
+        });
+        }
+
+        function sendMessage(params) {
+        params.where.dispatchEvent(
+            createMessage(
+            params.title,
+            params.content,
+            params.sender,
+            params.price,
+            params.type
+            )
+        );
+        }
+
+
+        SERVER.addEventListener(localEvents.query, e => {
+        let isItemExists = false;
+
+        e.target.querySelectorAll('li').forEach(elem => {
+            if (elem.getAttribute('type') == e.detail.type) {
+            isItemExists = true;
+            }
+        });
+
+        if (!isItemExists && e.detail.price && totalPrice <= cartLimit-e.detail.price) {
+            const newLiItem = document.createElement('li');
+            newLiItem.setAttribute('type', e.detail.type);
+            totalPrice += e.detail.price;
+
+            newLiItem.appendChild(document.createTextNode(e.detail.content));
+            e.target.appendChild(newLiItem);
+            totalPriceSpan.removeChild(totalPriceSpan.firstChild);
+            totalPriceSpan.appendChild(document.createTextNode(totalPrice));
+            
+            sendMessage({
+            where: e.detail.sender,
+            title: localEvents.response,
+            content: true
+            });
+        } else {
+            return sendMessage({
+                where: e.detail.sender,
+                title: localEvents.response,
+                content: false
+                });
+        }
+        });
+
+        CLIENT.addEventListener(localEvents.response, e => {
+        e.target.style.background = statuses[+e.detail.content];
+        });
+
+    </script>
+
+</body>
+</html>
